@@ -20,32 +20,31 @@ Syntax::Syntax(string input_file_name)
 		return;
 	}
 
-	//All.SingleChar.Find(";");
-
-	if (!Syntax_Analize(All, input_file_name));
+    Syntax_Analize(All, input_file_name);
 }
 
-bool Syntax::isAlphabetError(const char a) 
+bool Syntax::isAlphabetError(const char a, int ipos, int jpos)
 {
-	int ipos = 0;
-	int jpos = 0;
 
 	if ((char)a != ASCII[(int)a])
 	{
 			Error = true;
-			Err = "Error, unknown symbol : \"" + (char)a;
+            Err = "Error, unknown symbol : \"";
+            Err +=(char)a;
 			Err += "\" on pos: (";
-			Err	+= to_string(ipos) + ' ';
-			Err += to_string(jpos) + ")";
+            Err	+= to_string(ipos);
+            Err += ',';
+            Err += to_string(jpos);
+            Err += ")";
 			return true;
 	}
 	
 	return false;
 }
 
-int Syntax::GetCategory(char &a, All_in_One All)
+int Syntax::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 {
-	if (isAlphabetError(a))
+    if (isAlphabetError(a, ipos, jpos))
 	{
 		return 6;
 	}
@@ -98,7 +97,7 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 		{
 			a = line[jpos];
 			start:
-			switch (GetCategory(a, All))
+            switch (GetCategory(a, All, ipos, jpos))
 			{
 			case 0: //Ïğîá³ëüí³ ñèìâîëè (whitespace): ïğîá³ë (space) – 32; ïğèğ³âíÿí³ äî ïğîá³ë³â – 8, 9, 10, 13 
 			{
@@ -130,6 +129,10 @@ bool Syntax::Syntax_Analize(All_in_One &All,
                     if ((int)a >= 97 && (int)a <= 122)
                     {
                         a = (int)a - 32;
+                    }
+                    if (GetCategory(a, All, ipos, jpos) == 6)
+                    {
+                        return true;
                     }
 					elem += a;
 					jpos++;

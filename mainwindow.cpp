@@ -111,8 +111,8 @@ void MainWindow::on_start_button_clicked()
 {
     string input_file_name = ui->textEdit_Input->toPlainText().toUtf8().constData();
     string ErrorM;
-    //cout << "Enter file Name:";
-    if (ui->textEdit_Data->document()->blockCount() == 0)
+    int in = ui->textEdit_Data->document()->blockCount();
+    if (in < 2)
     {
         ErrorM = "No Data input";
         ui->textBrowser_Error->setText( (QString) ErrorM.c_str() );
@@ -128,8 +128,6 @@ void MainWindow::on_start_button_clicked()
 
     file.write(ui->textEdit_Data->toPlainText().toUtf8());
     file.close();
-
-    //getline(cin, input_file_name);
 
     Syntax Proc = Syntax(input_file_name);
     ShowAll(&Proc);

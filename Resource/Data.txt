@@ -1,13 +1,10 @@
 PROCEDURE PROC (VAR A, B: SIGNAL EXT;);
+(*VAR D:INTEGER
 
-(*Var A:INTEGER
-(*hello
-me
-*)
+hi
+my
 
+	friend*)
 VAR C:INTEGER
-
-var D:FLOAT
-
 BEGIN
 END;

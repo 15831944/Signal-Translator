@@ -40,7 +40,7 @@ private:
 
 	bool Syntax_Analize(All_in_One &, const string);
 
-	bool isAlphabetError(const char);
+    bool isAlphabetError(const char, int ipos,int jpos);
 
-	int GetCategory(char &a, All_in_One);
+    int GetCategory(char &a, All_in_One, int ipos,int jpos);
 };
