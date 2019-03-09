@@ -26,10 +26,17 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    FileToList.cpp \
+    StringList.cpp \
+    Syntax.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    ASCII.h \
+    FileToList.h \
+    StringList.h \
+    Syntax.h
 
 FORMS += \
         mainwindow.ui

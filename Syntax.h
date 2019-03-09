@@ -17,10 +17,13 @@ public:
 		return Error;
 	}
 
+    const char * GetErrorM()
+    {
+        return Err.c_str();
+    }
+
 	struct All_in_One
 	{
-		POSITION pos;
-
 		StringList Data;
 
 		StringList Identifiers;

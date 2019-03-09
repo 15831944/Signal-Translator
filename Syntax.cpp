@@ -1,17 +1,19 @@
 #include "Syntax.h"
+#include "QFile"
+#include "QTextStream"
 
 Syntax::Syntax(string input_file_name)
 {
 	Error = false;
 
-	if (!FileToList("SingleChar.txt", &All.SingleChar))
+    if (!FileToList("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\SingleChar.txt", &All.SingleChar))
 	{
 		cout << "Error";
 		Error = true;
 		return;
 	}
 
-	if (!FileToList("Keywords.txt", &All.Keywords ))
+    if (!FileToList("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\Keywords.txt", &All.Keywords ))
 	{
 		cout << "Error";
 		Error = true;
@@ -47,11 +49,6 @@ int Syntax::GetCategory(char &a, All_in_One All)
 	{
 		return 6;
 	}
-	else if ((int)a >= 97 && (int)a <= 122)
-	{
-		a = (int)a - 32;
-		return 2;
-	}
 	else if ((int)a >= 65 && (int)a <= 90)
 	{
 		return 2;
@@ -72,7 +69,8 @@ int Syntax::GetCategory(char &a, All_in_One All)
 bool Syntax::Syntax_Analize(All_in_One &All,
 	const string input_file_name)
 {
-	ifstream file;
+    //ifstream file;
+    QFile file(input_file_name.c_str());
 	char a;
 	string line;
 	string elem;
@@ -80,18 +78,21 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 	int jpos = 0, jpos_temp = 0;
 	ListNode *temp;
 
-	file.open("Resource/" + input_file_name + ".txt");
+    //file.open("Resource/" + input_file_name + ".txt");
 
-	if (!file.is_open())
+    if (!file.open(QIODevice::ReadOnly))
 	{
 		cout << "Файл не открыт\n\n";
 		file.close();
 		return false;
 	}
 
-	while (!file.eof())
+    QTextStream stream(&file);
+
+    while (!stream.atEnd())
 	{
-		getline(file, line);
+        //getline(file, line);
+        line = (string)stream.readLine().toUtf8().constData();
 		jpos = 0;
 		while (line[jpos] != '\0')
 		{
@@ -110,7 +111,7 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 				a = line[jpos];
 				jpos_temp = jpos;
 
-				while (!file.eof() && (int)a >= 48 && (int)a <= 57 )
+                while (!stream.atEnd() && (int)a >= 48 && (int)a <= 57 )
 				{
 					elem += a;
 					jpos++;
@@ -126,6 +127,10 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 
 				while (a != '\0' && All.SingleChar.Find(&a) == nullptr  && a != ' ' && a != '\n')
 				{
+                    if ((int)a >= 97 && (int)a <= 122)
+                    {
+                        a = (int)a - 32;
+                    }
 					elem += a;
 					jpos++;
 					if (jpos < line.length())
@@ -147,8 +152,20 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 				}
 				else
 				{
-					All.Keywords.AddTail(elem.c_str(), All.Keywords.GetLastId() + 1);
-					All.Data.AddTail(elem.c_str(), All.Keywords.GetLastId(), ipos, jpos_temp);
+                    temp = (ListNode*)All.Identifiers.Find(elem.c_str());
+                    if (temp == nullptr)
+                    {
+                        if (All.Identifiers.IsEmpty())
+                        {
+                            All.Identifiers.AddTail(elem.c_str(), 400);
+                        }
+                        else
+                        {
+                            All.Identifiers.AddTail(elem.c_str(), All.Identifiers.GetLastId() + 1);
+                        }
+                    }
+                    //All.Keywords.AddTail(elem.c_str(), All.Keywords.GetLastId() + 1);
+                    All.Data.AddTail(elem.c_str(), All.Identifiers.GetLastId(), ipos, jpos_temp);
 				}
 				if (All.SingleChar.Find(&a) != nullptr)
 				{
@@ -159,7 +176,12 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 			}
 			case 3: // Односимвольні роздільники 
 			{
-				All.Data.AddTail(&a, (int)a, ipos, jpos);
+                //из-за мусора в односимвольных разделителях юзаем костыль
+                elem.clear();
+                elem = a;
+                elem.erase(1,elem.length()-2);
+
+                All.Data.AddTail(elem.c_str(), (int)a, ipos, jpos);
 				break;
 			}
 			case 4: // Символи, з яких можуть починатися багатосимвольні роздільники (таких категорій може бути декілька) 
@@ -174,12 +196,14 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 				jpos++;
 				if (line[jpos] == '*')
 				{
-					while (!file.eof())
+                    while (!stream.atEnd())
 					{
 						a = line[jpos];
 						if (a == '\0')
 						{
-							getline(file, line);
+                            //getline(file, line);
+                            line.clear();
+                            line = (string)stream.readLine().toUtf8().constData();
 							jpos = 0;
 							a = line[jpos];
 							ipos++;
@@ -192,17 +216,25 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 							{
 								jpos++;
 								a = line[jpos];
-								if (a != '\0')
+                                if (a != '\0' && !stream.atEnd())
 								{
 									goto start;
 								}
 								jpos--;
+                                bkt = true;
 								break;
 							}
 
 						}
 						jpos++;
 					}
+                    if (!bkt)
+                    {
+                        Error = true;
+                        Err = "Illigal comment";
+                        line.clear();
+                        line[jpos+1] = '\0';
+                    }
 				}
 				else
 				{
@@ -225,7 +257,6 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 		ipos++;
 		
 	}
-
 
 	return false;
 }

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <iostream>
 
+
 #pragma warning (disable : 4996) 
 
 using namespace std;
@@ -32,7 +33,7 @@ private:
 public:
 	//Constructs an empty list for ListNode objects.
 	StringList(void);
-	~StringList(void);
+    ~StringList(void){};
 
 	//Head/Tail Access 
 	const ListNode* GetHead();//Returns the head element of the list 
@@ -63,9 +64,9 @@ public:
 
 	//Iteration 
 //Gets the next element for iterating.
-	POSITION GetNext();
-	//Gets the previous element for iterating.
-	POSITION GetPrev();
+    POSITION GetNext();
+    //Gets the previous element for iterating.
+    POSITION GetPrev();
 
 
 	//Retrieval/Modification
@@ -102,4 +103,5 @@ public:
 	void PrintList();
 
 	int GetLastId();
+
 };

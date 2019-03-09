@@ -7,27 +7,6 @@ StringList::StringList()
 	List_size = 0;
 }
 
-StringList::~StringList()
-{
-	/*if (Head == nullptr)
-		return;
-
-	while (Head->next != nullptr)
-	{
-		Head = Head->next;
-		delete Head->prev->str;
-		delete[] Head->prev;
-
-	}
-
-	if (Head->str != nullptr)
-	{
-		delete[] Head->str;
-	}
-	delete[] Head;*/
-
-}
-
 const ListNode * StringList::GetHead()
 {
 	return Head;

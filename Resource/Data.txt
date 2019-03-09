@@ -1,0 +1,13 @@
+PROCEDURE PROC (VAR A, B: SIGNAL EXT;);
+
+(*Var A:INTEGER
+(*hello
+me
+*)
+
+VAR C:INTEGER
+
+var D:FLOAT
+
+BEGIN
+END;
