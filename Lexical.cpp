@@ -51,7 +51,11 @@ int Lexical::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 	else if ((int)a >= 65 && (int)a <= 90)
 	{
 		return 2;
-	}
+    }
+    else if ((int)a >= 97 && (int)a <= 122)
+    {
+        return 2;
+    }
 	else if (a == '(')
 	{
 		return 5;
@@ -72,16 +76,15 @@ int Lexical::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 bool Lexical::Lexical_Analize(All_in_One &All,
 	const string input_file_name)
 {
-    //ifstream file;
     QFile file(input_file_name.c_str());
+
 	char a;
+    bool bkt = false;
 	string line;
 	string elem;
 	int ipos = 0;
 	int jpos = 0, jpos_temp = 0;
 	ListNode *temp;
-
-    //file.open("Resource/" + input_file_name + ".txt");
 
     if (!file.open(QIODevice::ReadOnly))
 	{
@@ -94,14 +97,17 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 
     while (!stream.atEnd())
 	{
-        //getline(file, line);
         line = (string)stream.readLine().toUtf8().constData();
         TransformTab(line);
+
 		jpos = 0;
+
 		while (line[jpos] != '\0')
 		{
 			a = line[jpos];
+
 			start:
+
             switch (GetCategory(a, All, ipos, jpos))
 			{
 			case 0: //Пробільні символи (whitespace): пробіл (space) – 32; прирівняні до пробілів – 8, 9, 10, 13 
@@ -144,13 +150,13 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 				a = line[jpos];
 				jpos_temp = jpos;
 
-				while (a != '\0' && All.SingleChar.Find(&a) == nullptr  && a != ' ' && a != '\n')
+                while (a != '\0' && All.SingleChar.Find(&a) == nullptr  && a != ' ' && a != '\n')
 				{
                     if ((int)a >= 97 && (int)a <= 122)
                     {
                         a = (int)a - 32;
                     }
-                    if (GetCategory(a, All, ipos, jpos) == 6)
+                    else if (GetCategory(a, All, ipos, jpos) == 6)
                     {
                         return true;
                     }
@@ -166,14 +172,14 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 						break;
 					}
 					
-				}
-				temp = (ListNode*)All.Keywords.Find(elem.c_str());
+                }
+                temp = (ListNode*)All.Keywords.Find(elem.c_str());
 
 				if (temp != nullptr)
 				{
 					All.Data.AddTail(temp->str, temp->id, ipos, jpos_temp);
 				}
-				else
+                else
 				{
                     temp = (ListNode*)All.Identifiers.Find(elem.c_str());
                     if (temp == nullptr)
@@ -187,7 +193,6 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                             All.Identifiers.AddTail(elem.c_str(), All.Identifiers.GetLastId() + 1);
                         }
                     }
-                    //All.Keywords.AddTail(elem.c_str(), All.Keywords.GetLastId() + 1);
                     All.Data.AddTail(elem.c_str(), All.Identifiers.GetLastId(), ipos, jpos_temp);
 				}
 				if (All.SingleChar.Find(&a) != nullptr)
@@ -215,11 +220,11 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 			{
 				elem.clear();
 				elem += a;
-				bool bkt = false;
 				jpos++;
 				if (line[jpos] == '*')
 				{
-                    while (!stream.atEnd())
+                    bkt = false;
+                    while (line[jpos] != '\0' || !stream.atEnd() )
 					{
 						a = line[jpos];
 						if (a == '\0')
@@ -240,7 +245,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 							{
 								jpos++;
 								a = line[jpos];
-                                if (a != '\0' && !stream.atEnd())
+                                if (a != '\0' /*&& !stream.atEnd()*/)
 								{
 									goto start;
 								}
@@ -250,7 +255,11 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 							}
                             else
                             {
-                                jpos--;//
+                                jpos--;/*
+                                         данный костыль для того,
+                                         чтобы не перескакивать через
+                                         один символ при считывании коммента
+                                       */
                             }
 
 						}
@@ -268,7 +277,8 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 				{
 					All.Data.AddTail(elem.c_str(), (int)a, ipos, jpos-1);
 					a = line[jpos];
-					goto start;
+                    //goto start;
+                    jpos--;
 				}
 
 				break;
@@ -291,6 +301,9 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 
 void Lexical::TransformTab(string &line)
 {
+    //костыль для того, чтобы считать
+    //нормально позицию элемента при вводе
+    //символа табуляции
     int t_pos = line.find('\t');
 
     if (t_pos != -1)
