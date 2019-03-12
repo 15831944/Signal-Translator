@@ -1,4 +1,4 @@
-#include "StringList.h"
+﻿#include "StringList.h"
 
 StringList::StringList()
 {

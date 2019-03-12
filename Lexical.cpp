@@ -1,8 +1,8 @@
-#include "Syntax.h"
+ï»¿#include "Lexical.h"
 #include "QFile"
 #include "QTextStream"
 
-Syntax::Syntax(string input_file_name)
+Lexical::Lexical(string input_file_name)
 {
 	Error = false;
 
@@ -20,10 +20,10 @@ Syntax::Syntax(string input_file_name)
 		return;
 	}
 
-    Syntax_Analize(All, input_file_name);
+    Lexical_Analize(All, input_file_name);
 }
 
-bool Syntax::isAlphabetError(const char a, int ipos, int jpos)
+bool Lexical::isAlphabetError(const char a, int ipos, int jpos)
 {
 
 	if ((char)a != ASCII[(int)a])
@@ -42,7 +42,7 @@ bool Syntax::isAlphabetError(const char a, int ipos, int jpos)
 	return false;
 }
 
-int Syntax::GetCategory(char &a, All_in_One All,int ipos,int jpos)
+int Lexical::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 {
     if (isAlphabetError(a, ipos, jpos))
 	{
@@ -60,12 +60,16 @@ int Syntax::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 	{
 		return 3;
 	}
+    else if ((int)a >= 48 && (int)a <= 57)
+    {
+        return 1;
+    }
 
 
 	return 0;
 }
 
-bool Syntax::Syntax_Analize(All_in_One &All,
+bool Lexical::Lexical_Analize(All_in_One &All,
 	const string input_file_name)
 {
     //ifstream file;
@@ -81,7 +85,7 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 
     if (!file.open(QIODevice::ReadOnly))
 	{
-		cout << "Ôàéë íå îòêğûò\n\n";
+		cout << "Ğ¤Ğ°Ğ¹Ğ» Ğ½Ğµ Ğ¾Ñ‚ĞºÑ€Ñ‹Ñ‚\n\n";
 		file.close();
 		return false;
 	}
@@ -92,6 +96,7 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 	{
         //getline(file, line);
         line = (string)stream.readLine().toUtf8().constData();
+        TransformTab(line);
 		jpos = 0;
 		while (line[jpos] != '\0')
 		{
@@ -99,12 +104,12 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 			start:
             switch (GetCategory(a, All, ipos, jpos))
 			{
-			case 0: //Ïğîá³ëüí³ ñèìâîëè (whitespace): ïğîá³ë (space) – 32; ïğèğ³âíÿí³ äî ïğîá³ë³â – 8, 9, 10, 13 
+			case 0: //ĞŸÑ€Ğ¾Ğ±Ñ–Ğ»ÑŒĞ½Ñ– ÑĞ¸Ğ¼Ğ²Ğ¾Ğ»Ğ¸ (whitespace): Ğ¿Ñ€Ğ¾Ğ±Ñ–Ğ» (space) â€“ 32; Ğ¿Ñ€Ğ¸Ñ€Ñ–Ğ²Ğ½ÑĞ½Ñ– Ğ´Ğ¾ Ğ¿Ñ€Ğ¾Ğ±Ñ–Ğ»Ñ–Ğ² â€“ 8, 9, 10, 13 
 			{
 				//All.Data.AddTail(&a, (int)a, ipos, jpos);
 				break;
 			}
-			case 1: //Ñèìâîëè, ç ÿêèõ ìîæóòü ïî÷èíàòèñÿ êîíñòàíòè
+			case 1: //Ğ¡Ğ¸Ğ¼Ğ²Ğ¾Ğ»Ğ¸, Ğ· ÑĞºĞ¸Ñ… Ğ¼Ğ¾Ğ¶ÑƒÑ‚ÑŒ Ğ¿Ğ¾Ñ‡Ğ¸Ğ½Ğ°Ñ‚Ğ¸ÑÑ ĞºĞ¾Ğ½ÑÑ‚Ğ°Ğ½Ñ‚Ğ¸
 			{
 				elem.clear();
 				a = line[jpos];
@@ -116,9 +121,24 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 					jpos++;
 					a = line[jpos];
 				}
+
+                temp = (ListNode*)All.Constants.Find(elem.c_str());
+                if (temp == nullptr)
+                {
+                    if (All.Constants.IsEmpty())
+                    {
+                        All.Constants.AddTail(elem.c_str(), 500);
+                    }
+                    else
+                    {
+                        All.Constants.AddTail(elem.c_str(), All.Constants.GetLastId() + 1);
+                    }
+                }
+                All.Data.AddTail(elem.c_str(), All.Constants.GetLastId(), ipos, jpos_temp);
+
 				break;
 			}
-			case 2: //Ñèìâîëè, ç ÿêèõ ìîæóòü ïî÷èíàòèñÿ ³äåíòèô³êàòîğè òà êëş÷îâ³ ñëîâà 
+			case 2: //Ğ¡Ğ¸Ğ¼Ğ²Ğ¾Ğ»Ğ¸, Ğ· ÑĞºĞ¸Ñ… Ğ¼Ğ¾Ğ¶ÑƒÑ‚ÑŒ Ğ¿Ğ¾Ñ‡Ğ¸Ğ½Ğ°Ñ‚Ğ¸ÑÑ Ñ–Ğ´ĞµĞ½Ñ‚Ğ¸Ñ„Ñ–ĞºĞ°Ñ‚Ğ¾Ñ€Ğ¸ Ñ‚Ğ° ĞºĞ»ÑÑ‡Ğ¾Ğ²Ñ– ÑĞ»Ğ¾Ğ²Ğ° 
 			{
 				elem.clear();
 				a = line[jpos];
@@ -177,9 +197,9 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 				break;
 
 			}
-			case 3: // Îäíîñèìâîëüí³ ğîçä³ëüíèêè 
+			case 3: // ĞĞ´Ğ½Ğ¾ÑĞ¸Ğ¼Ğ²Ğ¾Ğ»ÑŒĞ½Ñ– Ñ€Ğ¾Ğ·Ğ´Ñ–Ğ»ÑŒĞ½Ğ¸ĞºĞ¸ 
 			{
-                //èç-çà ìóñîğà â îäíîñèìâîëüíûõ ğàçäåëèòåëÿõ şçàåì êîñòûëü
+                //Ğ¸Ğ·-Ğ·Ğ° Ğ¼ÑƒÑĞ¾Ñ€Ğ° Ğ² Ğ¾Ğ´Ğ½Ğ¾ÑĞ¸Ğ¼Ğ²Ğ¾Ğ»ÑŒĞ½Ñ‹Ñ… Ñ€Ğ°Ğ·Ğ´ĞµĞ»Ğ¸Ñ‚ĞµĞ»ÑÑ… ÑĞ·Ğ°ĞµĞ¼ ĞºĞ¾ÑÑ‚Ñ‹Ğ»ÑŒ
                 elem.clear();
                 elem = a;
                 elem.erase(1,elem.length()-2);
@@ -187,11 +207,11 @@ bool Syntax::Syntax_Analize(All_in_One &All,
                 All.Data.AddTail(elem.c_str(), (int)a, ipos, jpos);
 				break;
 			}
-			case 4: // Ñèìâîëè, ç ÿêèõ ìîæóòü ïî÷èíàòèñÿ áàãàòîñèìâîëüí³ ğîçä³ëüíèêè (òàêèõ êàòåãîğ³é ìîæå áóòè äåê³ëüêà) 
+			case 4: // Ğ¡Ğ¸Ğ¼Ğ²Ğ¾Ğ»Ğ¸, Ğ· ÑĞºĞ¸Ñ… Ğ¼Ğ¾Ğ¶ÑƒÑ‚ÑŒ Ğ¿Ğ¾Ñ‡Ğ¸Ğ½Ğ°Ñ‚Ğ¸ÑÑ Ğ±Ğ°Ğ³Ğ°Ñ‚Ğ¾ÑĞ¸Ğ¼Ğ²Ğ¾Ğ»ÑŒĞ½Ñ– Ñ€Ğ¾Ğ·Ğ´Ñ–Ğ»ÑŒĞ½Ğ¸ĞºĞ¸ (Ñ‚Ğ°ĞºĞ¸Ñ… ĞºĞ°Ñ‚ĞµĞ³Ğ¾Ñ€Ñ–Ğ¹ Ğ¼Ğ¾Ğ¶Ğµ Ğ±ÑƒÑ‚Ğ¸ Ğ´ĞµĞºÑ–Ğ»ÑŒĞºĞ°) 
 			{
 				break;
 			}
-			case 5: // Ñèìâîëè, ç ÿêèõ ìîæóòü ïî÷èíàòèñÿ êîìåíòàğ³ (òàêèõ êàòåãîğ³é ìîæå áóòè äåê³ëüêà)
+			case 5: // Ğ¡Ğ¸Ğ¼Ğ²Ğ¾Ğ»Ğ¸, Ğ· ÑĞºĞ¸Ñ… Ğ¼Ğ¾Ğ¶ÑƒÑ‚ÑŒ Ğ¿Ğ¾Ñ‡Ğ¸Ğ½Ğ°Ñ‚Ğ¸ÑÑ ĞºĞ¾Ğ¼ĞµĞ½Ñ‚Ğ°Ñ€Ñ– (Ñ‚Ğ°ĞºĞ¸Ñ… ĞºĞ°Ñ‚ĞµĞ³Ğ¾Ñ€Ñ–Ğ¹ Ğ¼Ğ¾Ğ¶Ğµ Ğ±ÑƒÑ‚Ğ¸ Ğ´ĞµĞºÑ–Ğ»ÑŒĞºĞ°)
 			{
 				elem.clear();
 				elem += a;
@@ -207,6 +227,7 @@ bool Syntax::Syntax_Analize(All_in_One &All,
                             //getline(file, line);
                             line.clear();
                             line = (string)stream.readLine().toUtf8().constData();
+                            TransformTab(line);
 							jpos = 0;
 							a = line[jpos];
 							ipos++;
@@ -227,6 +248,10 @@ bool Syntax::Syntax_Analize(All_in_One &All,
                                 bkt = true;
 								break;
 							}
+                            else
+                            {
+                                jpos--;//
+                            }
 
 						}
 						jpos++;
@@ -248,7 +273,7 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 
 				break;
 			}
-			case 6: // Íåäîïóñòèì³ ñèìâîëè
+			case 6: // ĞĞµĞ´Ğ¾Ğ¿ÑƒÑÑ‚Ğ¸Ğ¼Ñ– ÑĞ¸Ğ¼Ğ²Ğ¾Ğ»Ğ¸
 			{
 				return true;
 			}
@@ -264,3 +289,13 @@ bool Syntax::Syntax_Analize(All_in_One &All,
 	return false;
 }
 
+void Lexical::TransformTab(string &line)
+{
+    int t_pos = line.find('\t');
+
+    if (t_pos != -1)
+    {
+        line.erase(t_pos,1);
+        line.insert(t_pos,"                    ");
+    }
+}

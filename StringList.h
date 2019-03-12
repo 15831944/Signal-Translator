@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 #include <string.h>
 #include <stdio.h>
 #include <iostream>
 
 
-#pragma warning (disable : 4996) 
+//#pragma warning (disable : 4996)
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+ï»¿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "StringList.h"
 #include "QFile"
@@ -22,14 +22,14 @@ void MainWindow::ShowElem(ListNode *temp, QTableWidget *table, int capacity)
 {
     int i = 0;
     string int_;
-    table->setColumnCount(2);//çàäà¸ì êîëè÷åñòâî ñòîëáèêîâ
-    table->setHorizontalHeaderLabels(QStringList() << "elem" << "id" );//íàçâàíèÿ äëÿ ñòîëáèêîâ
-    table->setColumnWidth(0, 100);//øèðèíà ïåðâîãî ñòîëáèêà
-    table->setColumnWidth(1, 60);//øèðèíà âòîðîãî ñòîëáèêà
+    table->setColumnCount(2);//Ð·Ð°Ð´Ð°Ñ‘Ð¼ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÑ‚Ð¾Ð»Ð±Ð¸ÐºÐ¾Ð²
+    table->setHorizontalHeaderLabels(QStringList() << "elem" << "id" );//Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ñ Ð´Ð»Ñ ÑÑ‚Ð¾Ð»Ð±Ð¸ÐºÐ¾Ð²
+    table->setColumnWidth(0, 100);//ÑˆÐ¸Ñ€Ð¸Ð½Ð° Ð¿ÐµÑ€Ð²Ð¾Ð³Ð¾ ÑÑ‚Ð¾Ð»Ð±Ð¸ÐºÐ°
+    table->setColumnWidth(1, 60);//ÑˆÐ¸Ñ€Ð¸Ð½Ð° Ð²Ñ‚Ð¾Ñ€Ð¾Ð³Ð¾ ÑÑ‚Ð¾Ð»Ð±Ð¸ÐºÐ°
 
-    table->setRowCount(capacity);//çàäà¸ì êîëè÷åñòâî ÿ÷ååê íà îñíîâå êîëè÷åñòâà ýë. äåêà
+    table->setRowCount(capacity);//Ð·Ð°Ð´Ð°Ñ‘Ð¼ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÑ‡ÐµÐµÐº Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð° ÑÐ». Ð´ÐµÐºÐ°
 
-    //âûâîäèì ïîýëåìåíòíî
+    //Ð²Ñ‹Ð²Ð¾Ð´Ð¸Ð¼ Ð¿Ð¾ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð½Ð¾
     while (temp != nullptr)
     {
         int_.clear();
@@ -42,7 +42,7 @@ void MainWindow::ShowElem(ListNode *temp, QTableWidget *table, int capacity)
     }
 }
 
-void MainWindow::ShowAll(Syntax *Proc)
+void MainWindow::ShowAll(Lexical *Proc)
 {
     if (Proc->isError())
     {
@@ -129,7 +129,7 @@ void MainWindow::on_start_button_clicked()
     file.write(ui->textEdit_Data->toPlainText().toUtf8());
     file.close();
 
-    Syntax Proc = Syntax(input_file_name);
+    Lexical Proc = Lexical(input_file_name);
     ShowAll(&Proc);
 }
 

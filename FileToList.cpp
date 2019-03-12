@@ -1,4 +1,4 @@
-#include "FileToList.h"
+ï»¿#include "FileToList.h"
 
 #include <string>
 #include <stdio.h>
@@ -26,7 +26,7 @@ bool FileToList(string filename, StringList *Temp)
 
     if (!file.open(QIODevice::ReadOnly))
 	{
-		cout << "Ôàéë íå îòêðûò\n\n";
+		cout << "Ð¤Ð°Ð¹Ð» Ð½Ðµ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚\n\n";
 		file.close();
 		return false;
 	}

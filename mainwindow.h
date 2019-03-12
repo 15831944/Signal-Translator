@@ -1,8 +1,8 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "Syntax.h"
+#include "Lexical.h"
 #include <QTableWidget>
 
 namespace Ui
@@ -21,7 +21,7 @@ public:
 private slots:
     void on_start_button_clicked();
 
-    void ShowAll(Syntax *Proc);
+    void ShowAll(Lexical *Proc);
 
     void ShowElem(ListNode *temp,  QTableWidget *table, int capacity);
 

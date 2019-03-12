@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "StringList.h"
 #include <iostream>
 #include "FileToList.h"
@@ -6,12 +6,12 @@
 #include <fstream>
 #include <string>
 
-class Syntax 
+class Lexical
 {
 public:
 
-	Syntax(string input_file_name);
-	~Syntax() {};
+    Lexical(string input_file_name);
+    ~Lexical() {};
 	bool isError() 
 	{
 		return Error;
@@ -38,9 +38,11 @@ private:
 	bool Error;
 	string Err;
 
-	bool Syntax_Analize(All_in_One &, const string);
+    bool Lexical_Analize(All_in_One &, const string);
 
     bool isAlphabetError(const char, int ipos,int jpos);
 
     int GetCategory(char &a, All_in_One, int ipos,int jpos);
+
+    void TransformTab(string &);
 };

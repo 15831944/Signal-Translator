@@ -29,14 +29,14 @@ SOURCES += \
         mainwindow.cpp \
     FileToList.cpp \
     StringList.cpp \
-    Syntax.cpp
+    Lexical.cpp
 
 HEADERS += \
         mainwindow.h \
     ASCII.h \
     FileToList.h \
     StringList.h \
-    Syntax.h
+    Lexical.h
 
 FORMS += \
         mainwindow.ui
