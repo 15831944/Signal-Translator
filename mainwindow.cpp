@@ -47,6 +47,7 @@ void MainWindow::ShowAll(Lexical *Proc)
     if (Proc->isError())
     {
         ui->textBrowser_Error->setText( Proc->GetErrorM() );
+        return;
     }
     else
     {
@@ -145,6 +146,10 @@ void MainWindow::on_start_button_2_clicked()
         ErrorM = "File Doesn't exist :" + input_file_name;
         ui->textBrowser_Error->setText( (QString) ErrorM.c_str() );
         file.close();
+    }
+    else
+    {
+        ui->textBrowser_Error->setText( "No Errors" );
     }
 
     QTextStream stream(&file);

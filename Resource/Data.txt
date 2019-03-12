@@ -1,8 +1,4 @@
 PROCEDURE PROC (VAR A, B: SIGNAL EXT;);
-(*VAR D:INTEGER
-he*l**l*o
-  my
-   friend*)
 VAR C:INTEGER
 BEGIN
 END;
