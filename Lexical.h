@@ -3,7 +3,6 @@
 #include <iostream>
 #include "FileToList.h"
 #include "ASCII.h"
-#include <fstream>
 #include <string>
 
 class Lexical

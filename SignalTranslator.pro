@@ -36,7 +36,8 @@ HEADERS += \
     ASCII.h \
     FileToList.h \
     StringList.h \
-    Lexical.h
+    Lexical.h \
+    sa.h
 
 FORMS += \
         mainwindow.ui

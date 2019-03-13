@@ -44,7 +44,11 @@ bool Lexical::isAlphabetError(const char a, int ipos, int jpos)
 
 int Lexical::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 {
-    if (isAlphabetError(a, ipos, jpos))
+    if (a == '\'')//доп задание, потом уберу
+    {
+        return 4;
+    }
+    else if (isAlphabetError(a, ipos, jpos))
 	{
 		return 6;
 	}
@@ -82,8 +86,8 @@ bool Lexical::Lexical_Analize(All_in_One &All,
     bool bkt = false;
 	string line;
 	string elem;
-	int ipos = 0;
-	int jpos = 0, jpos_temp = 0;
+    int ipos = 0;
+    int jpos = 0, jpos_temp = 0;
 	ListNode *temp;
 
     if (!file.open(QIODevice::ReadOnly))
@@ -100,7 +104,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
         line = (string)stream.readLine().toUtf8().constData();
         TransformTab(line);
 
-		jpos = 0;
+        jpos = 0;
 
 		while (line[jpos] != '\0')
 		{
@@ -160,6 +164,11 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                     {
                         return true;
                     }
+                    else if(GetCategory(a, All, ipos, jpos) == 4)
+                    {
+                        jpos--;
+                        break;
+                    }
 					elem += a;
 					jpos++;
 					if (jpos < line.length())
@@ -177,7 +186,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 
 				if (temp != nullptr)
 				{
-					All.Data.AddTail(temp->str, temp->id, ipos, jpos_temp);
+                    All.Data.AddTail(temp->str, temp->id, ipos+1, jpos_temp+1);
 				}
                 else
 				{
@@ -186,14 +195,14 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                     {
                         if (All.Identifiers.IsEmpty())
                         {
-                            All.Identifiers.AddTail(elem.c_str(), 400);
+                            All.Identifiers.AddTail(elem.c_str(), 1001);
                         }
                         else
                         {
                             All.Identifiers.AddTail(elem.c_str(), All.Identifiers.GetLastId() + 1);
                         }
                     }
-                    All.Data.AddTail(elem.c_str(), All.Identifiers.GetLastId(), ipos, jpos_temp);
+                    All.Data.AddTail(elem.c_str(), All.Identifiers.GetLastId(), ipos+1, jpos_temp+1);
 				}
 				if (All.SingleChar.Find(&a) != nullptr)
 				{
@@ -209,11 +218,119 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                 elem = a;
                 elem.erase(1,elem.length()-2);
 
-                All.Data.AddTail(elem.c_str(), (int)a, ipos, jpos);
+                All.Data.AddTail(elem.c_str(), (int)a, ipos+1, jpos+1);
 				break;
 			}
-			case 4: // Символи, з яких можуть починатися багатосимвольні роздільники (таких категорій може бути декілька) 
+            case 4: // доп задание: "дата" '2019-03-13'// Символи, з яких можуть починатися багатосимвольні роздільники (таких категорій може бути декілька)
 			{
+                int i;
+                jpos_temp = jpos;
+                jpos++;
+                a = line[jpos];
+                elem.clear();
+                while (a != '\0')
+                {
+                    if ((int)a == 39)
+                    {
+                        break;
+                    }
+                    elem += a;
+                    jpos++;
+                    a = line[jpos];
+                }
+
+                for (i = 0; i<4; i++)
+                {
+                    if (GetCategory(elem[i], All, ipos, jpos_temp) == 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Error = true;
+                        Err = "Incporrect Data on pos: (";
+                        Err	+= to_string(ipos);
+                        Err += ',';
+                        Err += to_string(jpos_temp);
+                        Err += ")";
+                        return true;
+                    }
+                }
+                if (elem[4] != '-')
+                {
+                    Error = true;
+                    Err = "Incporrect Data on pos: (";
+                    Err	+= to_string(ipos);
+                    Err += ',';
+                    Err += to_string(jpos_temp);
+                    Err += ")";
+                    return true;
+                }
+
+                for (i = 5; i<7; i++)
+                {
+                    if (GetCategory(elem[i], All, ipos, jpos_temp) == 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Error = true;
+                        Err = "Incporrect Data on pos: (";
+                        Err	+= to_string(ipos);
+                        Err += ',';
+                        Err += to_string(jpos_temp);
+                        Err += ")";
+                        return true;
+                    }
+                }
+                if (elem[7] != '-')
+                {
+                    Error = true;
+                    Err = "Incporrect Data on pos: (";
+                    Err	+= to_string(ipos);
+                    Err += ',';
+                    Err += to_string(jpos_temp);
+                    Err += ")";
+                    return true;
+                }
+
+                for (i = 8; i< 10; i++)
+                {
+                    if (GetCategory(elem[i], All, ipos, jpos_temp) == 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Error = true;
+                        Err = "Incporrect Data on pos: (";
+                        Err	+= to_string(ipos);
+                        Err += ',';
+                        Err += to_string(jpos_temp);
+                        Err += ")";
+                        return true;
+                    }
+                }
+
+                temp = (ListNode*)All.Identifiers.Find(elem.c_str());
+                if (temp == nullptr)
+                {
+                    if (All.Identifiers.IsEmpty())
+                    {
+                        All.Identifiers.AddTail(elem.c_str(), 1001);
+                    }
+                    else
+                    {
+                        All.Identifiers.AddTail(elem.c_str(), All.Identifiers.GetLastId() + 1);
+                    }
+                    All.Data.AddTail(elem.c_str(), All.Identifiers.GetLastId(), ipos+1, jpos_temp+1);
+                }
+                else
+                {
+                    All.Data.AddTail(elem.c_str(), temp->id, ipos+1, jpos_temp+1);
+                }
+
 				break;
 			}
 			case 5: // Символи, з яких можуть починатися коментарі (таких категорій може бути декілька)
@@ -227,13 +344,12 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                     while (line[jpos] != '\0' || !stream.atEnd() )
 					{
 						a = line[jpos];
-						if (a == '\0')
+                        if (a == '\0' || line.empty())
 						{
-                            //getline(file, line);
                             line.clear();
                             line = (string)stream.readLine().toUtf8().constData();
                             TransformTab(line);
-							jpos = 0;
+                            jpos = 0;
 							a = line[jpos];
 							ipos++;
 						}
@@ -248,7 +364,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                                 if (a != '\0' /*&& !stream.atEnd()*/)
 								{
 									goto start;
-								}
+                                }
 								jpos--;
                                 bkt = true;
 								break;
@@ -275,7 +391,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 				}
 				else
 				{
-					All.Data.AddTail(elem.c_str(), (int)a, ipos, jpos-1);
+                    All.Data.AddTail(elem.c_str(), (int)a, ipos+1, /*jpos-1*/jpos);
 					a = line[jpos];
                     //goto start;
                     jpos--;

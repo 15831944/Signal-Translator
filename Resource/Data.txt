@@ -1,4 +1,21 @@
+<<<<<<< HEAD
 PROCEDURE PROC (VAR A, B: SIGNAL EXT;);
 VAR C:INTEGER
+=======
+'2019-03-01'
+PRO(***)CE(*
+
+
+*)AA   D'2019-03-01'U(* 
+
+RE*) BB PR(*
+
+ *)CC OC (V(*@#$%^&*(OIKJB*)DD AR A, B: SIGNAL EXT;);
+
+
+VAR C:IN '2019-03-12' TEGER
+>>>>>>> last fast-fix for lex
 BEGIN
 END;
+
+EE
