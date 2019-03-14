@@ -1,5 +1,5 @@
 # Signal-Translator
-##Задание для В.8
+## Задание для В.8
 
 ![alt-text](https://pp.userapi.com/c853528/v853528388/271b/FkaK8uwixXw.jpg)
 ```
