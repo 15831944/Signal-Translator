@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "Lexical.h"
 #include <QTableWidget>
+#include "waytofile.h"
 
 namespace Ui
 {
@@ -25,10 +26,26 @@ private slots:
 
     void ShowElem(ListNode *temp,  QTableWidget *table, int capacity);
 
-    void on_start_button_2_clicked();
+    void on_pull_button_clicked();
+
+    void on_browse_button_clicked();
+
+    void setPath(QString);
+
+    void tryToOpen();
+
+    friend class WayToFile;
 
 private:
     Ui::MainWindow *ui;
+
+    WayToFile *f;
+
+    QString FilePath;
+
+
+
 };
+
 
 #endif // MAINWINDOW_H

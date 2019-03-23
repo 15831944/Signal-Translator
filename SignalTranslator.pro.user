@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 4.8.2, 2019-03-12T18:21:49. -->
-=======
-<!-- Written by QtCreator 4.8.2, 2019-03-13T14:46:12. -->
->>>>>>> last fast-fix for lex
+<!-- Written by QtCreator 4.8.2, 2019-03-13T15:06:29. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>

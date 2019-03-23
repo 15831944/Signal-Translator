@@ -29,7 +29,8 @@ SOURCES += \
         mainwindow.cpp \
     FileToList.cpp \
     StringList.cpp \
-    Lexical.cpp
+    Lexical.cpp \
+    waytofile.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,10 +38,12 @@ HEADERS += \
     FileToList.h \
     StringList.h \
     Lexical.h \
-    sa.h
+    sa.h \
+    waytofile.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    waytofile.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

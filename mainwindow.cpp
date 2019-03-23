@@ -3,14 +3,14 @@
 #include "StringList.h"
 #include "QFile"
 #include "QTextStream"
+#include "waytofile.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
+    MainWindow::tryToOpen();
 }
 
 MainWindow::~MainWindow()
@@ -134,7 +134,7 @@ void MainWindow::on_start_button_clicked()
     ShowAll(&Proc);
 }
 
-void MainWindow::on_start_button_2_clicked()
+void MainWindow::on_pull_button_clicked()
 {
     string input_file_name = ui->textEdit_Input->toPlainText().toUtf8().constData();
     string ErrorM;
@@ -158,3 +158,37 @@ void MainWindow::on_start_button_2_clicked()
     file.close();
 }
 
+void MainWindow::setPath(QString way)
+{
+    ui->textEdit_Input->setText(way);
+    ui->textEdit_Input->show();
+}
+
+
+void MainWindow::on_browse_button_clicked()
+{
+    f = new WayToFile(this);
+    f->show();
+
+}
+
+void MainWindow::tryToOpen()
+{
+    QFile file("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\PathToFile.txt");
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        cout << "Файл не открыт\n\n";
+        file.close();
+        return;
+    }
+
+    QTextStream Outstream(&file);
+
+    QString temp = file.readLine();
+    if (temp.length() != 0)
+    MainWindow::setPath(temp);
+
+    file.close();
+
+}
