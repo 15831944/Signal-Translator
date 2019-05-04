@@ -15,6 +15,20 @@ QString Syntax::to_QString(string data)
     return (QString)(data.c_str());
 }
 
+void Syntax::isBeginEnd()
+{
+    if (Data.Find("BEGIN") == nullptr)
+    {
+        Error = true;
+        Err = "Syntax Error: Missed \"BEGIN\" ";
+    }
+    else if (Data.Find("END") == nullptr)
+    {
+        Error = true;
+        Err = "Syntax Error: Missed \"END\" ";
+    }
+}
+
 QString Syntax::Add_Dots()
 {
     QString temp = "*";
@@ -30,7 +44,11 @@ void Syntax::SyntaxStart(StringList Data)
     Tree = Add_Dots() + "<signal-program>\n";
     Dots++;
     Tree += Add_Dots() + "<program>\n";
+
+    isBeginEnd();
+    if (!Error)
     Rule2((ListNode*) Data.GetHead());
+
 }
 
 void Syntax::Rule2(ListNode *Curr)
@@ -242,7 +260,7 @@ ListNode* Syntax::Rule7(ListNode *Curr)
     else
     {
         Error = true;
-        Err = "Syntax Error: Wrond 7 rule";
+        Err = "Syntax Error: Missed \"VAR\" on pos (" + to_string(Curr->ipos) + "," + to_string(Curr->jpos -1) + ")";
     }
     Dots--;
     return Curr;
@@ -375,6 +393,13 @@ ListNode* Syntax::Rule11(ListNode *Curr)
         }
 
         Dots--;
+    }
+    if (strcmp((const char*) Curr->str, "BEGIN") == 0)
+    {
+        Error = true;
+        Err = "Syntax Error: Missing \";\" after \"";
+        Err += Curr->prev->str;
+        Err += "\" on pos (" + to_string(Curr->prev->ipos) + "," + to_string(Curr->prev->jpos + strlen(Curr->prev->str)) + ")";
     }
 
     return Curr;

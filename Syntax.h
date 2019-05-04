@@ -86,6 +86,10 @@ private:
     //<letter> --> A | B | ... | Z
     ListNode* Rule18(ListNode *Curr);
 
+    //checking for "BEGIN" and "END"
+
+    void isBeginEnd();
+
     StringList Data;
     StringList Keywords;
     int Dots;

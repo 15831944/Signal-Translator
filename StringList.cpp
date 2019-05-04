@@ -215,101 +215,6 @@ void StringList::RemoveTail()
 	}
 }
 
-//void StringList::AppendExclusively(const StringList *List, int input_id)
-//{
-//	ListNode *temp;
-//	ListNode *second_temp;
-//	int i;
-//	bool Check;
-//	i = List->List_size;
-//	temp = List->Head;
-//
-//	while (temp != nullptr)
-//	{
-//		second_temp = Head;
-//		Check = false;
-//		while (second_temp != nullptr)
-//		{
-//			if ((strcmp(temp->str, second_temp->str) == 0))
-//			{
-//				Check = true;
-//			}
-//			second_temp = second_temp->next;
-//		}
-//		if (Check == false)
-//		{
-//			this->AddTail(temp->str, input_id);
-//			Check = true;
-//		}
-//		temp = temp->next;
-//	}
-//}
-
-//void StringList::Splice(POSITION Where, StringList *List, POSITION first, POSITION last, int input_id)
-//{
-//	ListNode *ptr1, *ptr2;
-//	int k = 0, l = 0;
-//	if (Where == nullptr)
-//	{
-//		return;
-//	}
-//
-//	if (List->IsEmpty() == false)
-//	{
-//		if (first == nullptr || last == nullptr) return;
-//		ptr1 = Head;
-//		ptr2 = (ListNode*)List->GetHeadPosition();
-//		while (ptr2 != (ListNode*)first)
-//		{
-//			l++;
-//			ptr2 = (ListNode*)List->GetNext();
-//		}
-//		while (ptr1 != Where)
-//		{
-//			k++;
-//			ptr1 = ptr1->next;
-//		}
-//		while (ptr2 != last)
-//		{
-//			this->InsertAfter(ptr2->str, k, input_id);
-//			ptr2 = (ListNode*)List->GetNext();
-//			List->RemoveAt(l);
-//		}
-//
-//	}
-//}
-
-//void StringList::Unique()
-//{
-//	ListNode *current = Head, *current2 = Head, *buffer;
-//	if (List_size != 1 || List_size != 0)
-//	{
-//		while (current2 != nullptr)
-//		{
-//			current = current2;
-//
-//			while (current->next != nullptr)
-//			{
-//				if (strcmp(current2->str, current->next->str) == 0)
-//				{
-//					buffer = current->next->next;
-//					delete[] current->next;
-//					current->next = buffer;
-//					if (buffer != nullptr)
-//					{
-//						buffer->prev = current;
-//					}
-//					List_size--;
-//					continue;
-//				}
-//				current = current->next;
-//			}
-//			current2 = current2->next;
-//		}
-//		current->next = nullptr;
-//	}
-//}
-
 POSITION StringList::GetNext()
 {
 	if (id != nullptr)
@@ -377,90 +282,12 @@ void StringList::RemoveAt(int count)
 	delete[] ptr2;
 }
 
-//void StringList::SetAt(char * elem, int count)
-//{
-//	if (count > List_size || count < 0 || elem == nullptr)
-//	{
-//		return;
-//	}
-//	int i = 0;
-//	ListNode  *ptr = Head;
-//	while (i < count)
-//	{
-//		ptr = ptr->next;
-//		i++;
-//	}
-//	delete[] ptr->str;
-//	ptr->str = new char[strlen(elem) + 1];
-//	strcpy(ptr->str, elem);
-//}
-
-//void StringList::InsertAfter(char * elem, int n, int input_id)
-//{
-//	if (elem == nullptr)
-//	{
-//		return;
-//	}
-//	int i;
-//	ListNode *ptr, *p;
-//	if (n < List_size && n >= 0)
-//	{
-//		ptr = Head;
-//		for (i = 0; i < n; i++)
-//			ptr = ptr->next;
-//		if (ptr->next != nullptr)
-//		{
-//			p = new ListNode;
-//			p->str = new char[strlen(elem) + 1];
-//			strcpy(p->str, elem);
-//			p->prev = ptr;
-//			p->next = ptr->next;
-//			ptr->next = p;
-//			p->next->prev = p;
-//
-//			List_size++;
-//		}
-//		else
-//			this->AddTail(elem, input_id);
-//	}
-//
-//}
-
-//void StringList::InsertBefore(char * elem, int n, int input_id)
-//{
-//	if (elem == nullptr) return;
-//	int i;
-//	ListNode *ptr, *p;
-//	if (n < List_size && n >= 0)
-//	{
-//		ptr = Head;
-//		for (i = 0; i < n; i++)
-//			ptr = ptr->next;
-//		if (ptr->prev != nullptr)
-//		{
-//			p = new ListNode;
-//			p->str = new char[strlen(elem) + 1];
-//			strcpy(p->str, elem);
-//			p->next = ptr;
-//			p->prev = ptr->prev;
-//			ptr->prev = p;
-//			p->prev->next = p;
-//
-//			List_size++;
-//		}
-//		else
-//			this->AddHead(elem, input_id);
-//	}
-//
-//}
-
 const ListNode * StringList::Find(const char *elem)
 {
 	if (elem == nullptr) return nullptr;
 
 	ListNode * temp = Head;
 	string temp_ = (char*)elem;
-    //temp_.erase(1, temp_.length() - 1);
 	
 	while (temp != nullptr)
 	{

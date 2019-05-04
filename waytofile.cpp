@@ -10,8 +10,6 @@ WayToFile::WayToFile(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //QString mPath = "C:/";
-
     // DIRECTORIES
 
     dirModel = new QFileSystemModel(this);
@@ -20,8 +18,6 @@ WayToFile::WayToFile(QWidget *parent) :
     dirModel->setFilter(QDir::NoDotAndDotDot |
                         QDir::AllDirs);
 
-    // QFileSystemModel requires root path
-    //dirModel->setRootPath(mPath);
     WayToFile::start();
 
 }
@@ -92,10 +88,9 @@ void WayToFile::on_treeView_doubleClicked(const QModelIndex &index)
         Outstream << FilePath;
 
         file.close();
+
         qApp->quit();
         QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-
-        //MainWindow::tryToOpen();
         QWidget::close();
     }
 
