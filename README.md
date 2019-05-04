@@ -1,7 +1,7 @@
 # Signal-Translator
 ## Задание для В.8
 
-![alt-text](https://pp.userapi.com/c853528/v853528388/271b/FkaK8uwixXw.jpg)
+![alt-text](https://pp.userapi.com/c850416/v850416346/35202/XtGJ4RSXC_8.jpg)
 ```
 1. <signal-program> --> <program>
 2. <program> --> PROCEDURE <procedureidentifier><parameters-list> ; <block> ; 
