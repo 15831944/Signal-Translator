@@ -18,6 +18,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::ClearAll()
+{
+    ui->textEdit_Tree->clear();
+   // ui->textEdit_Input->clear();
+    ui->tableWidget_Identificators->clear();
+    ui->tableWidget_Tokens->clear();
+    ui->tableWidget_Symbols->clear();
+    ui->tableWidget_KeyWords->clear();
+}
+
 void MainWindow::ShowElem(ListNode *temp, QTableWidget *table, int capacity)
 {
     int i = 0;
@@ -47,6 +57,7 @@ void MainWindow::ShowAll(Lexical *Proc)
     if (Proc->isError())
     {
         ui->textBrowser_Error->setText( Proc->GetErrorM() );
+        ClearAll();
         return;
     }
     else
@@ -131,7 +142,34 @@ void MainWindow::on_start_button_clicked()
     file.close();
 
     Lexical Proc = Lexical(input_file_name);
-    ShowAll(&Proc);
+
+
+    if (!Proc.isError())
+    {
+        Syntax Proc2 = Syntax(Proc.All);
+        ShowTree(&Proc2);
+        if (!Proc2.isError())
+            ShowAll(&Proc);
+    }
+
+
+
+}
+
+void MainWindow::ShowTree(Syntax *Proc2)
+{
+    if (Proc2->isError())
+    {
+        ui->textBrowser_Error->setText( Proc2->GetErrorM() );
+        ClearAll();
+        return;
+    }
+    else
+    {
+        ui->textBrowser_Error->setText( (QString) "No Errors" );
+        ui->textEdit_Tree->setText(Proc2->Tree);
+    }
+
 }
 
 void MainWindow::on_pull_button_clicked()

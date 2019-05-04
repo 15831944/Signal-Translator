@@ -33,7 +33,7 @@ private slots:
 
     void on_treeView_doubleClicked(const QModelIndex &index);
 
-private:
+    private:
     Ui::WayToFile *ui;
 
     QFileSystemModel *dirModel;

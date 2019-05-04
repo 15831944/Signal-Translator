@@ -457,11 +457,10 @@ void StringList::RemoveAt(int count)
 const ListNode * StringList::Find(const char *elem)
 {
 	if (elem == nullptr) return nullptr;
-	else if (elem == '\0') return nullptr;
 
 	ListNode * temp = Head;
 	string temp_ = (char*)elem;
-	temp_.erase(1, temp_.length() - 1);
+    //temp_.erase(1, temp_.length() - 1);
 	
 	while (temp != nullptr)
 	{
@@ -476,6 +475,25 @@ const ListNode * StringList::Find(const char *elem)
 		temp = temp->next;
 	}
 	return temp;
+}
+
+const ListNode * StringList::Find(const char elem)
+{
+    if (elem == '\0') return nullptr;
+
+    ListNode * temp = Head;
+    string temp_ = "";
+    temp_ += elem;
+
+    while (temp != nullptr)
+    {
+        if (strcmp(temp->str, temp_.c_str())== 0)
+        {
+            break;
+        }
+        temp = temp->next;
+    }
+    return temp;
 }
 
 int StringList::FindIndex(char *elem) const

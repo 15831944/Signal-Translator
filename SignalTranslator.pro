@@ -30,7 +30,8 @@ SOURCES += \
     FileToList.cpp \
     StringList.cpp \
     Lexical.cpp \
-    waytofile.cpp
+    waytofile.cpp \
+    Syntax.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
     StringList.h \
     Lexical.h \
     sa.h \
-    waytofile.h
+    waytofile.h \
+    Syntax.h
 
 FORMS += \
         mainwindow.ui \

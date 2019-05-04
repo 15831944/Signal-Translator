@@ -4,13 +4,29 @@
 #include "FileToList.h"
 #include "ASCII.h"
 #include <string>
+#include "Syntax.h"
+
+const string SignalPath = "C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\";
+
+struct All_in_One
+{
+    StringList Data;
+
+    StringList Identifiers; // <letter><string>
+
+    StringList Constants; // pi numbers etc
+
+    StringList SingleChar; // ; : ) ( ...
+
+    StringList Keywords; //Begin SIGNAL
+};
 
 class Lexical
 {
 public:
 
     Lexical(string input_file_name);
-    ~Lexical() {};
+    ~Lexical() {}
 	bool isError() 
 	{
 		return Error;
@@ -21,18 +37,7 @@ public:
         return Err.c_str();
     }
 
-	struct All_in_One
-	{
-		StringList Data;
-
-		StringList Identifiers;
-
-		StringList Constants; // pi
-
-		StringList SingleChar; // ; : ) ( ...
-
-		StringList Keywords; //Begin 
-	}All;
+    struct All_in_One All;
 private:
 	bool Error;
 	string Err;

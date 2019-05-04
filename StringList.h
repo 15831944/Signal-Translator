@@ -102,6 +102,7 @@ public:
 	//Print all list
 	void PrintList();
 
-	int GetLastId();
+    const ListNode* Find(const char elem);
 
+	int GetLastId();
 };

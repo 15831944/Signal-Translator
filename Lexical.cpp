@@ -6,14 +6,14 @@ Lexical::Lexical(string input_file_name)
 {
 	Error = false;
 
-    if (!FileToList("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\SingleChar.txt", &All.SingleChar))
+    if (!FileToList(SignalPath + "SingleChar.txt", &All.SingleChar))
 	{
 		cout << "Error";
 		Error = true;
 		return;
 	}
 
-    if (!FileToList("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\Keywords.txt", &All.Keywords ))
+    if (!FileToList(SignalPath + "Keywords.txt", &All.Keywords ))
 	{
 		cout << "Error";
 		Error = true;
@@ -32,9 +32,9 @@ bool Lexical::isAlphabetError(const char a, int ipos, int jpos)
             Err = "Error, unknown symbol : \"";
             Err +=(char)a;
 			Err += "\" on pos: (";
-            Err	+= to_string(ipos);
+            Err	+= to_string(ipos +1);
             Err += ',';
-            Err += to_string(jpos);
+            Err += to_string(jpos +1);
             Err += ")";
 			return true;
 	}
@@ -60,7 +60,7 @@ int Lexical::GetCategory(char &a, All_in_One All,int ipos,int jpos)
 	{
 		return 5;
 	}
-	else if (All.SingleChar.Find(&a))
+    else if (All.SingleChar.Find(a))
 	{
 		return 3;
 	}
@@ -129,18 +129,22 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 				}
 
                 temp = (ListNode*)All.Constants.Find(elem.c_str());
-                if (temp == nullptr)
+                if (temp != nullptr)
+                {
+                    All.Data.AddTail(temp->str, temp->id, ipos+1, jpos_temp+1);
+                }
+                else
                 {
                     if (All.Constants.IsEmpty())
                     {
-                        All.Constants.AddTail(elem.c_str(), 500);
+                        All.Constants.AddTail(elem.c_str(), 501);
                     }
                     else
                     {
                         All.Constants.AddTail(elem.c_str(), All.Constants.GetLastId() + 1);
                     }
+                    All.Data.AddTail(elem.c_str(), All.Constants.GetLastId(), ipos+1, jpos_temp+1);
                 }
-                All.Data.AddTail(elem.c_str(), All.Constants.GetLastId(), ipos, jpos_temp);
 
 				break;
 			}
@@ -150,7 +154,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 				a = line[jpos];
 				jpos_temp = jpos;
 
-                while (a != '\0' && All.SingleChar.Find(&a) == nullptr  && a != ' ' && a != '\n')
+                while (a != '\0' && All.SingleChar.Find(a) == nullptr  && a != ' ' && a != '\n')
 				{
                     if ((int)a >= 97 && (int)a <= 122)
                     {
@@ -200,7 +204,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                     }
                     All.Data.AddTail(elem.c_str(), All.Identifiers.GetLastId(), ipos+1, jpos_temp+1);
 				}
-				if (All.SingleChar.Find(&a) != nullptr)
+                if (All.SingleChar.Find(a) != nullptr)
 				{
 					jpos--;
 				}
