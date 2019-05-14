@@ -605,3 +605,4 @@ ListNode* Syntax::Rule15(ListNode *Curr)
     Dots--;
     return Curr;
 }
+

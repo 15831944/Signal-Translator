@@ -4,7 +4,6 @@
 #include "QFile"
 #include "QTextStream"
 #include "waytofile.h"
-#include "Tree.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

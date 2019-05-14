@@ -365,7 +365,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="pull_button">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>880</x>
       <y>520</y>
       <width>131</width>
       <height>51</height>
@@ -378,9 +378,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="textEdit_Input">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>880</x>
       <y>400</y>
-      <width>321</width>
+      <width>331</width>
       <height>111</height>
      </rect>
     </property>
@@ -428,9 +428,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="textEdit_Tree">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>880</x>
       <y>40</y>
-      <width>321</width>
+      <width>331</width>
       <height>321</height>
      </rect>
     </property>

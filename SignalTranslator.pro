@@ -39,7 +39,6 @@ HEADERS += \
     FileToList.h \
     StringList.h \
     Lexical.h \
-    sa.h \
     waytofile.h \
     Syntax.h
 

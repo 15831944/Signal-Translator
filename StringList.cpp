@@ -107,7 +107,7 @@ void StringList::AddHead(const char *value, int input_id)
 		temp->next = Head;
 		Head = temp;
 	}
-	Head->prev = nullptr;
+    Head->prev = nullptr;
 }
 
 void StringList::AddHead(const StringList *List, int input_id)

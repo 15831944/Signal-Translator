@@ -35,11 +35,14 @@
    <widget class="QTreeView" name="treeView">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>-10</x>
+      <y>-10</y>
       <width>751</width>
       <height>411</height>
      </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
     </property>
    </widget>
   </widget>
