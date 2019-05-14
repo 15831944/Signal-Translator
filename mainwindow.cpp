@@ -4,6 +4,7 @@
 #include "QFile"
 #include "QTextStream"
 #include "waytofile.h"
+#include "Tree.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -86,8 +87,8 @@ void MainWindow::ShowAll(Lexical *Proc)
     ui->tableWidget_Tokens->setHorizontalHeaderLabels(QStringList() << "elem" << "id" << "ipos" << "jpos");
     ui->tableWidget_Tokens->setColumnWidth(0, 100);
     ui->tableWidget_Tokens->setColumnWidth(1, 60);
-    ui->tableWidget_Tokens->setColumnWidth(2, 70);
-    ui->tableWidget_Tokens->setColumnWidth(3, 70);
+    ui->tableWidget_Tokens->setColumnWidth(2, 50);
+    ui->tableWidget_Tokens->setColumnWidth(3, 50);
 
     ui->tableWidget_Tokens->setRowCount(Proc->All.Data.Getsize());
 
@@ -111,12 +112,6 @@ void MainWindow::ShowAll(Lexical *Proc)
         temp = temp->next;
     }
 
-
-    /*~~~~~~~~~~~~input_Data~~~~~~~~~~~~~~*/
-
-
-
-    /**************************/
 }
 
 void MainWindow::on_start_button_clicked()
@@ -141,16 +136,23 @@ void MainWindow::on_start_button_clicked()
     file.write(ui->textEdit_Data->toPlainText().toUtf8());
     file.close();
 
+    //signal translator starts
     Lexical Proc = Lexical(input_file_name);
-
 
     if (!Proc.isError())
     {
         Syntax Proc2 = Syntax(Proc.All);
         ShowTree(&Proc2);
         if (!Proc2.isError())
+        {
             ShowAll(&Proc);
+
+        }
+
+
+
     }
+
 
 
 
@@ -212,7 +214,8 @@ void MainWindow::on_browse_button_clicked()
 
 void MainWindow::tryToOpen()
 {
-    QFile file("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\PathToFile.txt");
+    string temp_path =  SignalPath + "PathToFile.txt";
+    QFile file(temp_path.c_str());
 
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -228,5 +231,26 @@ void MainWindow::tryToOpen()
     MainWindow::setPath(temp);
 
     file.close();
-
 }
+
+void MainWindow::on_textEdit_Data_cursorPositionChanged()
+{
+    QTextCursor cursor = ui->textEdit_Data->textCursor();
+    QString Text = ui->textEdit_Data->toPlainText();
+
+    int line = 0;
+
+    for (int i = 0; i < cursor.position(); i++)
+    {
+        if(Text[i] == "\n")
+        {
+            line++;
+        }
+    }
+
+    const int relativePos = cursor.position() - cursor.block().position();
+
+    ui->label_pos->setText((const QString) ((to_string(line+1) + " "+ to_string(relativePos+1)).c_str()));
+}
+
+

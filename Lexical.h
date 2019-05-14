@@ -6,7 +6,7 @@
 #include <string>
 #include "Syntax.h"
 
-const string SignalPath = "C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\";
+
 
 struct All_in_One
 {

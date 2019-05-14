@@ -323,6 +323,43 @@ const ListNode * StringList::Find(const char elem)
     return temp;
 }
 
+ListNode* StringList::Find(const char* elem, ListNode* pos)
+{
+    if (elem == nullptr) return nullptr;
+
+    ListNode* temp = Head;
+    string temp_ = (char*)elem;
+
+    while (temp != nullptr)
+    {
+        if (strcmp((const char *)temp->str, (const char *)elem) == 0)
+        {
+            if (temp->ipos == pos->ipos && temp->jpos == pos->jpos)
+            {
+                return nullptr;
+            }
+            else
+            {
+                break;
+            }
+
+        }
+        else if (strcmp(temp->str, temp_.c_str())== 0)
+        {
+            if (temp->ipos == pos->ipos && temp->jpos == pos->jpos)
+            {
+                return nullptr;
+            }
+            else
+            {
+                break;
+            }
+        }
+        temp = temp->next;
+    }
+    return temp;
+}
+
 int StringList::FindIndex(char *elem) const
 {
 	if (elem == nullptr) return -1;

@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+#include <string.h>
 				
 const char ASCII[128] = 
    //     0    1    2    3	  4	   5	6	 7	  8	   9   10   11   12	  13
@@ -21,3 +23,5 @@ const char ASCII[128] =
 		'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '~', '~', '~',
 	//  126  127
         '1', '~' };
+
+const std::string SignalPath = "C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\";

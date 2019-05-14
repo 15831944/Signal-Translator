@@ -4,8 +4,87 @@
 #include "QTextStream"
 #include "Lexical.h"
 #include <string.h>
+#include "Tree.h"
 
 using namespace std;
+
+struct leaf
+{
+private:
+    struct vector<leaf> child;
+    int lexem_id;
+    int level;
+    string name;
+
+    string write(string tree)
+    {
+        for (int i = 0; i < level - 1; i++)
+           tree += "|   ";
+           tree += "|-->" + name + "\n";
+        for (auto &i : child)
+            tree = i.write(tree);
+        return tree;
+    }
+public:
+    leaf()
+    {
+        level = 0;
+        lexem_id = 0;
+        name = "";
+    };
+    leaf(int level_number, int leaf_id, string node_name)
+    {
+        lexem_id = leaf_id;
+        level = level_number;
+        name = node_name;
+    };
+
+    void delete_last_child()
+    {
+        if (child.size() > 0)
+            child.pop_back();
+    };
+    void add_child(int leaf_id, int child_id, string name)
+    {
+        child.push_back(leaf(leaf_id, child_id, name));
+    }
+    leaf& get_child(int i)
+    {
+        if (i < child.size() && i >= 0)
+            return child[i];
+    }
+    void print_tree()
+    {
+        for (int i = 0; i < level - 1; i++)
+            cout << "|   ";
+            cout << "|-->" << name << endl;
+        for (auto &i : child)
+            i.print_tree();
+    }
+
+    void write_tree()
+    {
+        QFile file("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\TreeB.txt");
+
+        if (!file.open(QIODevice::WriteOnly))
+        {
+            cout << "Файл не открыт\n\n";
+            file.close();
+            return;
+        }
+
+        QTextStream Outstream(&file);
+
+        string tree = "";
+
+        tree = write(tree);
+
+
+        Outstream << tree.c_str();
+
+        file.close();
+    }
+};
 
 class Syntax
 {
@@ -90,10 +169,14 @@ private:
 
     void isBeginEnd();
 
+    leaf tree;
+
     StringList Data;
     StringList Keywords;
     int Dots;
     bool Error;
     string Err;
+
+    string temporary;
 };
 

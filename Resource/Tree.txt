@@ -1,0 +1,65 @@
+*<signal-program>
+**<program>
+***PROCEDURE 401
+***<procedure-identifier>
+****<identifier>
+*****PROC 1001
+***<parameters-list>
+**** ( 40
+****<declarations-list>
+*****<declaration>
+******<variable-identifier>
+*******<identifier>
+********A 1002
+******<identifiers-list>
+****** : 58
+******<atribute>
+*******INTEGER 408
+****** ; 59
+******<declaration>
+*******<variable-identifier>
+********<identifier>
+*********B 1003
+*******<identifiers-list>
+******** , 44
+*********<variable-identifier>
+**********<identifier>
+***********C 1004
+********<identifiers-list>
+******* : 58
+*******<atribute>
+********BLOCKFLOAT 410
+*******<attributes-list>
+********<atribute>
+*********EXT 411
+******* ; 59
+**** ) 41
+*** ; 59
+***<block>
+****<declarations>
+*****<variable-declarations>
+******VAR 403
+******<declarations-list>
+*******<declaration>
+********<variable-identifier>
+*********<identifier>
+**********D 1005
+********<identifiers-list>
+******** : 58
+********<atribute>
+*********FLOAT 409
+******** ; 59
+********<declaration>
+*********<variable-identifier>
+**********<identifier>
+***********DO 1006
+*********<identifiers-list>
+********* : 58
+*********<atribute>
+**********INTEGER 408
+********* ; 59
+****BEGIN 404
+****<statements-list>
+*****<empty>
+****END 405
+*** ; 59

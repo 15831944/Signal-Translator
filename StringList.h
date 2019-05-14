@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <iostream>
 
-
-//#pragma warning (disable : 4996)
-
 using namespace std;
 
 struct ListNode 
@@ -56,18 +53,12 @@ public:
 	void RemoveHead();
 	//Removes the element from the tail of the list.
 	void RemoveTail();
-	//void AppendExclusively(const StringList *List, int input_id);
-	//void Splice(POSITION Where, StringList *List, POSITION first, POSITION last);
-	//removes all duplicate elements
-	//void Unique();
-
 
 	//Iteration 
 //Gets the next element for iterating.
     POSITION GetNext();
     //Gets the previous element for iterating.
     POSITION GetPrev();
-
 
 	//Retrieval/Modification
 	POSITION GetHeadPosition();
@@ -77,14 +68,6 @@ public:
 	const char* GetAt(int count)const;
 	//Removes an element from this list as specified by position.
 	void RemoveAt(int count);
-	//Sets the element at a given position.
-	//void SetAt(char *elem, int count);
-
-	//Insertion 
-//Inserts a new element after a given position.
-	//void InsertAfter(char *elem, int count, int input_id);
-	//Inserts a new element before a given position.
-	//void InsertBefore(char *elem, int count, int input_id);
 
 	//Searching 
 //Gets the position of an element specified by string value.
@@ -103,6 +86,8 @@ public:
 	void PrintList();
 
     const ListNode* Find(const char elem);
+
+    ListNode* Find(const char* elem, ListNode* pos);
 
 	int GetLastId();
 };

@@ -171,7 +171,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                     }
 					elem += a;
 					jpos++;
-					if (jpos < line.length())
+                    if (jpos < (int)line.length())
 					{
 						a = line[jpos];
 					}

@@ -41,14 +41,14 @@ private slots:
 
     void ClearAll();
 
+    void on_textEdit_Data_cursorPositionChanged();
+
 private:
     Ui::MainWindow *ui;
 
     WayToFile *f;
 
     QString FilePath;
-
-
 
 };
 
