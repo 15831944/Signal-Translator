@@ -48,17 +48,8 @@
 |   |   |   |   |   |   |   |--><identifiers-list>
 |   |   |   |   |   |   |   |-->: 58
 |   |   |   |   |   |   |   |--><attribute>
-|   |   |   |   |   |   |   |   |-->FLOAT 409
+|   |   |   |   |   |   |   |   |-->INTEGER 408
 |   |   |   |   |   |   |   |-->; 59
-|   |   |   |   |   |   |   |--><declaration>
-|   |   |   |   |   |   |   |   |--><variable-identifier>
-|   |   |   |   |   |   |   |   |   |--><identifier>
-|   |   |   |   |   |   |   |   |   |   |-->DO 1006
-|   |   |   |   |   |   |   |   |--><identifiers-list>
-|   |   |   |   |   |   |   |   |-->: 58
-|   |   |   |   |   |   |   |   |--><attribute>
-|   |   |   |   |   |   |   |   |   |-->INTEGER 408
-|   |   |   |   |   |   |   |   |-->; 59
 |   |   |   |-->BEGIN 404
 |   |   |   |--><statements-list>
 |   |   |   |   |--><empty>

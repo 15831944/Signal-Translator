@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
      ui(new Ui::MainWindow)
 {
+    isF = true;
     ui->setupUi(this);
     MainWindow::tryToOpen();
 }
@@ -147,14 +148,7 @@ void MainWindow::on_start_button_clicked()
             ShowAll(&Proc);
 
         }
-
-
-
     }
-
-
-
-
 }
 
 void MainWindow::ShowTree(Syntax *Proc2)
@@ -206,9 +200,12 @@ void MainWindow::setPath(QString way)
 
 void MainWindow::on_browse_button_clicked()
 {
-    f = new WayToFile(this);
-    f->show();
-
+    if (isF)
+    {
+        f = new WayToFile(this);
+        f->show();
+        isF = false;
+    }
 }
 
 void MainWindow::tryToOpen()

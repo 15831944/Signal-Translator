@@ -10,7 +10,7 @@
 
 struct All_in_One
 {
-    StringList Data;
+    StringList Data; //lexems
 
     StringList Identifiers; // <letter><string>
 

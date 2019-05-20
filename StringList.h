@@ -55,7 +55,7 @@ public:
 	void RemoveTail();
 
 	//Iteration 
-//Gets the next element for iterating.
+    //Gets the next element for iterating.
     POSITION GetNext();
     //Gets the previous element for iterating.
     POSITION GetPrev();
@@ -70,13 +70,13 @@ public:
 	void RemoveAt(int count);
 
 	//Searching 
-//Gets the position of an element specified by string value.
+    //Gets the position of an element specified by string value.
 	const ListNode* Find(const char *elem);
 	//Gets the position of an element specified by a zero-based index.
 	int FindIndex(char *elem)const;
 
 	//Status 
-//Returns the number of elements in this list.
+    //Returns the number of elements in this list.
 	int Getsize()const;
 	//Tests for the empty list condition (no elements).
 	bool IsEmpty()const;
@@ -86,7 +86,8 @@ public:
 	void PrintList();
 
     const ListNode* Find(const char elem);
-
+    //Gets the position of an element specified by string value.
+    //Searching starts since current element "pos"
     ListNode* Find(const char* elem, ListNode* pos);
 
 	int GetLastId();

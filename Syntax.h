@@ -4,10 +4,11 @@
 #include "QTextStream"
 #include "Lexical.h"
 #include <string.h>
-#include "Tree.h"
 
 using namespace std;
 
+
+//vector "tree"
 struct leaf
 {
 private:
@@ -86,12 +87,14 @@ public:
     }
 };
 
+
 class Syntax
 {
 public:
     Syntax(struct All_in_One All);
     ~Syntax(){}
 
+    //for store Tree in text format
     QString Tree;
 
     bool isError()
@@ -156,20 +159,11 @@ private:
     //<identifier> --> <letter><string>
     ListNode* Rule15(ListNode *Curr);
 
-    //<string> --> <letter><string> | <digit><string> | <empty>
-    ListNode* Rule16(ListNode *Curr);
-
-    //<digit> --> 0 | 1 | ... | 9
-    ListNode* Rule17(ListNode *Curr);
-
-    //<letter> --> A | B | ... | Z
-    ListNode* Rule18(ListNode *Curr);
-
     //checking for "BEGIN" and "END"
-
     void isBeginEnd();
 
     leaf tree;
+
 
     StringList Data;
     StringList Keywords;

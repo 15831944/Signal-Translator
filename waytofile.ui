@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>702</width>
-    <height>358</height>
+    <width>751</width>
+    <height>412</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,8 +35,8 @@
    <widget class="QTreeView" name="treeView">
     <property name="geometry">
      <rect>
-      <x>-10</x>
-      <y>-10</y>
+      <x>0</x>
+      <y>0</y>
       <width>751</width>
       <height>411</height>
      </rect>
