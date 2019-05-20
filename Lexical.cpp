@@ -77,14 +77,16 @@ bool Lexical::Lexical_Analize(All_in_One &All,
 	const string input_file_name)
 {
     QFile file(input_file_name.c_str());
-
 	char a;
     bool bkt = false;
+
 	string line;
 	string elem;
+
     int ipos = 0;
     int jpos = 0, jpos_temp = 0;
-	ListNode *temp;
+
+    ListNode *temp = nullptr;
 
     if (!file.open(QIODevice::ReadOnly))
 	{
