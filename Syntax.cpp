@@ -42,10 +42,10 @@ QString Syntax::Add_Dots()
 void Syntax::SyntaxStart(StringList Data)
 {
     Tree = Add_Dots() + "<signal-program>\n";
-    tree.add_child(Dots + 1, -1, "<signal-program>");
+    tree.add_child(Dots + 1, -1, "<signal-program> ");
     Dots++;
     Tree += Add_Dots() + "<program>\n";
-    tree.add_child(Dots + 1, -1, "<program>");
+    tree.add_child(Dots + 1, -1, "<program> ");
     isBeginEnd();
     if (!Error)
     Rule2((ListNode*) Data.GetHead());
@@ -158,7 +158,7 @@ void Syntax::Rule2(ListNode *Curr)
 ListNode* Syntax::Rule3(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<block>");
+    tree.add_child(Dots + 1, -1, "<block> ");
     Tree += Add_Dots() + "<block>\n";
 
     Curr = Rule6(Curr);
@@ -207,10 +207,10 @@ ListNode* Syntax::Rule3(ListNode *Curr)
 ListNode* Syntax::Rule4(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<statements-list>");
+    tree.add_child(Dots + 1, -1, "<statements-list> ");
     Tree += Add_Dots() + "<statements-list>\n";
     Dots++;
-    tree.add_child(Dots + 1, -1, "<empty>");
+    tree.add_child(Dots + 1, -1, "<empty> ");
     Tree += Add_Dots() + "<empty>\n";
     if (strcmp ((const char*) Curr->str, "END") != 0)
     {
@@ -225,7 +225,7 @@ ListNode* Syntax::Rule5(ListNode *Curr)
 {
     Dots++;
     Tree += Add_Dots() + "<parameters-list>\n";
-    tree.add_child(Dots + 1, -1, "<parameters-list>");
+    tree.add_child(Dots + 1, -1, "<parameters-list> ");
     if (strcmp((const char*) Curr->str, "(") == 0)
     {
         Dots++;
@@ -261,7 +261,7 @@ ListNode* Syntax::Rule5(ListNode *Curr)
         if (strcmp((const char*) Curr->str, ";") == 0)
         {
             Dots++;
-            tree.add_child(Dots + 1, -1, "<empty>");
+            tree.add_child(Dots + 1, -1, "<empty> ");
             Tree += Add_Dots() + "<empty>\n";
             Dots--;
         }
@@ -278,7 +278,7 @@ ListNode* Syntax::Rule5(ListNode *Curr)
 ListNode* Syntax::Rule6(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<declarations>");
+    tree.add_child(Dots + 1, -1, "<declarations> ");
     Tree += Add_Dots() + "<declarations>\n";
     Curr = Rule7(Curr);
     Dots--;
@@ -288,7 +288,7 @@ ListNode* Syntax::Rule6(ListNode *Curr)
 ListNode* Syntax::Rule7(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<variable-declarations>");
+    tree.add_child(Dots + 1, -1, "<variable-declarations> ");
     Tree += Add_Dots() + "<variable-declarations>\n";
     if (strcmp((const char*) Curr->str, "VAR") == 0)
     {
@@ -319,12 +319,12 @@ ListNode* Syntax::Rule7(ListNode *Curr)
 ListNode* Syntax::Rule8(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<declarations-list>");
+    tree.add_child(Dots + 1, -1, "<declarations-list> ");
     Tree += Add_Dots() + "<declarations-list>\n";
     if (strcmp((const char*) Curr->str, ")") == 0)
     {
         Dots++;
-        tree.add_child(Dots + 1, -1, "<empty>");
+        tree.add_child(Dots + 1, -1, "<empty> ");
         Tree += Add_Dots() + "<empty>\n";
         Dots--;
         Curr = Curr->prev;
@@ -332,7 +332,7 @@ ListNode* Syntax::Rule8(ListNode *Curr)
     else if (strcmp((const char*) Curr->str, "BEGIN") == 0)
     {
         Dots++;
-        tree.add_child(Dots + 1, -1, "<empty>");
+        tree.add_child(Dots + 1, -1, "<empty> ");
         Tree += Add_Dots() + "<empty>\n";
         Dots--;
     }
@@ -359,7 +359,7 @@ ListNode* Syntax::Rule9(ListNode *Curr)
         return Curr;
     }
     Dots++;
-    tree.add_child(Dots + 1, -1, "<declaration>");
+    tree.add_child(Dots + 1, -1, "<declaration> ");
     Tree += Add_Dots() + "<declaration>\n";
     Curr = Rule13(Curr);
     if (!Error)
@@ -419,11 +419,12 @@ ListNode* Syntax::Rule9(ListNode *Curr)
 ListNode* Syntax::Rule10(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<identifiers-list>");
-    Tree += Add_Dots() + "<identifiers-list>\n";
+
 
     if (strcmp((const char *)Curr->str, ",") == 0)
     {
+        tree.add_child(Dots + 1, -1, "<identifiers-list> ");
+        Tree += Add_Dots() + "<identifiers-list>\n";
         Dots++;
         temporary = Curr->str;
         temporary += " " + to_string(Curr->id);
@@ -456,7 +457,7 @@ ListNode* Syntax::Rule11(ListNode *Curr)
     if ((strcmp((const char*) Curr->str, ";") != 0) && (strcmp((const char*) Curr->str, "BEGIN") != 0))
     {
         Dots++;
-        tree.add_child(Dots + 1, -1, "<attributes-list>");
+        tree.add_child(Dots + 1, -1, "<attributes-list> ");
         Tree += Add_Dots() + "<attributes-list>\n";
         Curr = Rule12(Curr);
 
@@ -494,7 +495,7 @@ ListNode* Syntax::Rule12(ListNode *Curr)
 
     Dots++;
     Tree += Add_Dots() + "<atribute>\n";
-    tree.add_child(Dots + 1, -1, "<attribute>");
+    tree.add_child(Dots + 1, -1, "<attribute> ");
     Dots++;
     if (strcmp((const char*) Curr->str, "SIGNAL") == 0)
     {
@@ -538,7 +539,7 @@ ListNode* Syntax::Rule12(ListNode *Curr)
 ListNode* Syntax::Rule13(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<variable-identifier>");
+    tree.add_child(Dots + 1, -1, "<variable-identifier> ");
     Tree += Add_Dots() + "<variable-identifier>\n";
     Curr = Rule15(Curr);
     Dots--;
@@ -548,7 +549,7 @@ ListNode* Syntax::Rule13(ListNode *Curr)
 ListNode* Syntax::Rule14(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, Curr->id, "<procedure-identifier>");
+    tree.add_child(Dots + 1, -1, "<procedure-identifier> ");
     Tree += Add_Dots() + "<procedure-identifier>\n";
 
     if ((strcmp((const char*) Curr->next->str, ";") != 0) && (strcmp((const char*) Curr->next->str, "(") != 0))
@@ -567,14 +568,14 @@ ListNode* Syntax::Rule14(ListNode *Curr)
 ListNode* Syntax::Rule15(ListNode *Curr)
 {
     Dots++;
-    tree.add_child(Dots + 1, -1, "<identifier>");
+    tree.add_child(Dots + 1, -1, "<identifier> ");
     Tree += Add_Dots() + "<identifier>\n";
     if (Curr->id > 1000)
     {
         if (Data.Find(Curr->str, Curr) != nullptr)
         {
             Error = true;
-            Err = "Syntax Error: Redefinition! \"";
+            Err = "Semantic Error: Redefinition! \"";
             Err += Curr->str;
             Err += "\" already exist (" + to_string(Curr->ipos) + "," + to_string(Curr->jpos) + ")";
         }

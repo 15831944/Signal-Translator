@@ -25,7 +25,9 @@ private slots:
 
     void ShowAll(Lexical *Proc);
 
-    void ShowTree(Syntax *Proc2);
+    void ShowTree();
+
+    void ShowAsm();
 
     void ShowElem(ListNode *temp,  QTableWidget *table, int capacity);
 
@@ -43,6 +45,8 @@ private slots:
 
     void on_textEdit_Data_cursorPositionChanged();
 
+    void on_treeORasm_button_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -52,6 +56,12 @@ private:
     QString FilePath;
 
     bool isF;
+
+    bool treeORasm;
+
+    QString Tree;
+
+    QString ASM;
 
 };
 

@@ -20,6 +20,14 @@ Lexical::Lexical(string input_file_name)
 		return;
 	}
 
+    if (!FileToList(SignalPath + "ASM_Keywords.txt", &All.ASM_Keywords ))
+    {
+        cout << "Error";
+        Error = true;
+        return;
+    }
+
+
     Lexical_Analize(All, input_file_name);
 }
 

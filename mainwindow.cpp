@@ -4,14 +4,17 @@
 #include "QFile"
 #include "QTextStream"
 #include "waytofile.h"
+#include "CodeGen.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
      ui(new Ui::MainWindow)
 {
     isF = true;
+    treeORasm = true;
     ui->setupUi(this);
     MainWindow::tryToOpen();
+    ui->treeORasm_button->setText("Show ASM");
 }
 
 MainWindow::~MainWindow()
@@ -118,6 +121,10 @@ void MainWindow::on_start_button_clicked()
 {
     string input_file_name = ui->textEdit_Input->toPlainText().toUtf8().constData();
     string ErrorM;
+    ASM = "";
+    ui->label_8->setText("Tree");
+    ui->treeORasm_button->setText("Show Asm");
+    treeORasm = true;
     int in = ui->textEdit_Data->document()->blockCount();
     if (in < 2)
     {
@@ -138,33 +145,39 @@ void MainWindow::on_start_button_clicked()
 
     //signal translator starts
     Lexical Proc = Lexical(input_file_name);
-
-    if (!Proc.isError())
+    if (Proc.isError())
     {
-        Syntax Proc2 = Syntax(Proc.All);
-        ShowTree(&Proc2);
-        if (!Proc2.isError())
-        {
-            ShowAll(&Proc);
-
-        }
-    }
-}
-
-void MainWindow::ShowTree(Syntax *Proc2)
-{
-    if (Proc2->isError())
-    {
-        ui->textBrowser_Error->setText( Proc2->GetErrorM() );
+        ui->textBrowser_Error->setText(Proc.GetErrorM());
         ClearAll();
         return;
     }
-    else
+
+    Syntax Proc2 = Syntax(Proc.All);
+    Tree = Proc2.Tree;
+    if (Proc2.isError())
     {
-        ui->textBrowser_Error->setText( (QString) "No Errors" );
-        ui->textEdit_Tree->setText(Proc2->Tree);
+        ui->textBrowser_Error->setText(Proc2.GetErrorM());
+        ClearAll();
+        return;
     }
 
+    CodeGenerator Proc3 = CodeGenerator(Proc.All, Proc2.tree);
+    ASM = Proc3.GetASM();
+    if (Proc3.isError())
+    {
+        ui->textBrowser_Error->setText(Proc3.GetErrorM());
+        ClearAll();
+        return;
+    }
+
+    ShowAll(&Proc);
+    ShowTree();
+}
+
+void MainWindow::ShowTree()
+{
+    ui->textBrowser_Error->setText( (QString) "No Errors" );
+    ui->textEdit_Tree->setText(Tree);
 }
 
 void MainWindow::on_pull_button_clicked()
@@ -233,6 +246,7 @@ void MainWindow::on_textEdit_Data_cursorPositionChanged()
 {
     QTextCursor cursor = ui->textEdit_Data->textCursor();
     QString Text = ui->textEdit_Data->toPlainText();
+    isF = true;
 
     int line = 0;
 
@@ -249,4 +263,27 @@ void MainWindow::on_textEdit_Data_cursorPositionChanged()
     ui->label_pos->setText((const QString) ((to_string(line+1) + " "+ to_string(relativePos+1)).c_str()));
 }
 
+void MainWindow::ShowAsm()
+{
+    ui->textBrowser_Error->setText( (QString) "No Errors" );
+    ui->textEdit_Tree->setText(ASM);
+}
 
+void MainWindow::on_treeORasm_button_clicked()
+{
+    if (treeORasm)
+    {
+        ui->treeORasm_button->setText("Show Tree");
+        ui->label_8->setText("ASM");
+        ShowAsm();
+        treeORasm = false;
+    }
+    else
+    {
+        ui->treeORasm_button->setText("Show Asm");
+        ui->label_8->setText("Tree");
+
+        ShowTree();
+        treeORasm = true;
+    }
+}

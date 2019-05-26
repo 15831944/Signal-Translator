@@ -31,7 +31,8 @@ SOURCES += \
     StringList.cpp \
     Lexical.cpp \
     waytofile.cpp \
-    Syntax.cpp
+    Syntax.cpp \
+    CodeGen.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     StringList.h \
     Lexical.h \
     waytofile.h \
-    Syntax.h
+    Syntax.h \
+    CodeGen.h
 
 FORMS += \
         mainwindow.ui \

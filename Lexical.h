@@ -19,6 +19,8 @@ struct All_in_One
     StringList SingleChar; // ; : ) ( ...
 
     StringList Keywords; //Begin SIGNAL
+
+    StringList ASM_Keywords;
 };
 
 class Lexical

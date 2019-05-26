@@ -1,0 +1,16 @@
+DATA|1|
+CODE|1|
+SEGMENT|1|
+END|1|
+ENDS|1|
+ENDP|1|
+PROC|1|
+RET|1|
+PUSH|1|
+MOV|1|
+ESP|1|
+EBP|1|
+DB|1|
+DD|1|
+DW|1|
+DQ|1|

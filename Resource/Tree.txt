@@ -3,7 +3,7 @@
 ***PROCEDURE 401
 ***<procedure-identifier>
 ****<identifier>
-*****PROC 1001
+*****PRO 1001
 ***<parameters-list>
 **** ( 40
 ****<declarations-list>
@@ -11,7 +11,6 @@
 ******<variable-identifier>
 *******<identifier>
 ********A 1002
-******<identifiers-list>
 ****** : 58
 ******<atribute>
 *******INTEGER 408
@@ -25,7 +24,6 @@
 *********<variable-identifier>
 **********<identifier>
 ***********C 1004
-********<identifiers-list>
 ******* : 58
 *******<atribute>
 ********BLOCKFLOAT 410
@@ -43,12 +41,19 @@
 *******<declaration>
 ********<variable-identifier>
 *********<identifier>
-**********D 1005
-********<identifiers-list>
+**********PROG 1005
 ******** : 58
 ********<atribute>
 *********INTEGER 408
 ******** ; 59
+********<declaration>
+*********<variable-identifier>
+**********<identifier>
+***********F 1006
+********* : 58
+*********<atribute>
+**********FLOAT 409
+********* ; 59
 ****BEGIN 404
 ****<statements-list>
 *****<empty>

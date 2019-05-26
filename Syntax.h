@@ -6,27 +6,19 @@
 #include <string.h>
 
 using namespace std;
-
+struct leaf;
 
 //vector "tree"
 struct leaf
 {
-private:
-    struct vector<leaf> child;
+
+public:
+
     int lexem_id;
     int level;
     string name;
+    struct vector<leaf> child;
 
-    string write(string tree)
-    {
-        for (int i = 0; i < level - 1; i++)
-           tree += "|   ";
-           tree += "|-->" + name + "\n";
-        for (auto &i : child)
-            tree = i.write(tree);
-        return tree;
-    }
-public:
     leaf()
     {
         level = 0;
@@ -85,6 +77,18 @@ public:
 
         file.close();
     }
+
+private:
+
+    string write(string tree)
+    {
+        for (int i = 0; i < level - 1; i++)
+           tree += "|   ";
+           tree += "|-->" + name + "\n";
+        for (auto &i : child)
+            tree = i.write(tree);
+        return tree;
+    }
 };
 
 
@@ -96,6 +100,7 @@ public:
 
     //for store Tree in text format
     QString Tree;
+    leaf tree;
 
     bool isError()
     {
@@ -162,7 +167,7 @@ private:
     //checking for "BEGIN" and "END"
     void isBeginEnd();
 
-    leaf tree;
+
 
 
     StringList Data;
