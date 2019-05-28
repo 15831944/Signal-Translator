@@ -3,14 +3,14 @@
 ***PROCEDURE 401
 ***<procedure-identifier>
 ****<identifier>
-*****PRO 1001
+*****PROG 1001
 ***<parameters-list>
 **** ( 40
 ****<declarations-list>
 *****<declaration>
 ******<variable-identifier>
 *******<identifier>
-********A 1002
+********ABC 1002
 ****** : 58
 ******<atribute>
 *******INTEGER 408
@@ -41,19 +41,19 @@
 *******<declaration>
 ********<variable-identifier>
 *********<identifier>
-**********PROG 1005
+**********AD 1005
+********<identifiers-list>
+********* , 44
+**********<variable-identifier>
+***********<identifier>
+************L 1006
 ******** : 58
 ********<atribute>
 *********INTEGER 408
-******** ; 59
-********<declaration>
-*********<variable-identifier>
-**********<identifier>
-***********F 1006
-********* : 58
+********<attributes-list>
 *********<atribute>
 **********FLOAT 409
-********* ; 59
+******** ; 59
 ****BEGIN 404
 ****<statements-list>
 *****<empty>

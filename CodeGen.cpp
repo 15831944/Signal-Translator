@@ -100,13 +100,14 @@ ListNode * CodeGenerator::parametersList()
         {
             int temp_id = id_counter;
             char temp_c ;
-            if (temp_id > Spec.length())
+
+            if ((int)temp_id > (int)Spec.length())
             {
                 Error = true;
                 Err = "Semantic Error: Too much identifiers in \"<parameters-list>\" ";
                 return nullptr;
             }
-            for (id_counter; id_counter > 0; id_counter--)
+            for (id_counter = id_counter; id_counter > 0; id_counter--)
             {
                 ASM += ";[EBP+" + to_QString(to_string(stack_counter)) + "] - ";
                 ASM += curr->str;
@@ -116,7 +117,7 @@ ListNode * CodeGenerator::parametersList()
                 curr = curr->next;
             }
 
-            if (temp_id < Spec.length())
+            if ((int)temp_id < (int)Spec.length())
             {
                 Error = true;
                 Err = "Semantic Error: Too much attributes in \"<parameters-list>\" ";
@@ -179,7 +180,8 @@ const char * CodeGenerator::type(int i)
         return "DD";
     case 8:
         return "DQ";
-    }
+    };
+    return "null";
 }
 
 void CodeGenerator::SemanticErr()
@@ -228,14 +230,14 @@ void CodeGenerator::block(ListNode * curr)
             int temp_id = id_counter;
             char temp_c ;
 
-            if (temp_id > Spec.length())
+            if ((int)temp_id > (int)Spec.length())
             {
                 Error = true;
                 Err = "Semantic Error: Too much identifiers in \"<variable-declarations>\" ";
                 return;
             }
 
-            for (id_counter; id_counter > 0; id_counter--)
+            for (id_counter = id_counter; id_counter > 0; id_counter--)
             {
                 temp_c = Spec[temp_id - id_counter];
                 ASM_c += curr->str;
@@ -244,7 +246,7 @@ void CodeGenerator::block(ListNode * curr)
                 curr = curr->next;
             }
 
-            if (temp_id < Spec.length())
+            if ((int)temp_id < (int)Spec.length())
             {
                 Error = true;
                 Err = "Semantic Error: Too much attributes in \"<variable-declarations>\"";
@@ -295,4 +297,22 @@ void CodeGenerator::block(ListNode * curr)
 
     ASM = ASM_c + ASM;
 
+}
+
+void CodeGenerator::write_to_file()
+{
+    QFile file("C:\\Users\\0137\\Desktop\\SignalTranslator\\Resource\\ASM_Code.asm");
+
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        cout << "Файл не открыт\n\n";
+        file.close();
+        return;
+    }
+
+    QTextStream Outstream(&file);
+
+    Outstream << ASM;
+
+    file.close();
 }

@@ -43,8 +43,11 @@ public:
     }
     leaf& get_child(int i)
     {
-        if (i < child.size() && i >= 0)
+        if (i < (int)child.size() && i >= 0)
+        {
             return child[i];
+        }
+        return child[0];
     }
     void print_tree()
     {

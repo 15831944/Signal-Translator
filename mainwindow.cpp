@@ -169,7 +169,7 @@ void MainWindow::on_start_button_clicked()
         ClearAll();
         return;
     }
-
+    Proc3.write_to_file();
     ShowAll(&Proc);
     ShowTree();
 }

@@ -27,7 +27,6 @@ Lexical::Lexical(string input_file_name)
         return;
     }
 
-
     Lexical_Analize(All, input_file_name);
 }
 
@@ -231,7 +230,7 @@ bool Lexical::Lexical_Analize(All_in_One &All,
                 All.Data.AddTail(elem.c_str(), (int)a, ipos+1, jpos+1);
 				break;
 			}
-            case 4: // доп задание: "дата" '2019-03-13'// Символи, з яких можуть починатися багатосимвольні роздільники (таких категорій може бути декілька)
+            case 4: // Символи, з яких можуть починатися багатосимвольні роздільники (таких категорій може бути декілька)
 			{
 				break;
 			}

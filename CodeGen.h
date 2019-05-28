@@ -12,8 +12,8 @@ class CodeGenerator
             CodeGenerator(struct All_in_One All, struct leaf L);
             ~CodeGenerator(){};
 
-            //for store Tree in text format
 
+            void write_to_file();
 
             bool isError()
             {
@@ -48,6 +48,8 @@ class CodeGenerator
             const char *to_Str(QString elem);
 
             const char * type(int i);
+
+
 
             QString ASM;
 

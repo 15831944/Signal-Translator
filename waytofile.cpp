@@ -66,7 +66,7 @@ void WayToFile::on_treeView_doubleClicked(const QModelIndex &index)
     }
     std::string temp = selectedTexts[0].toUtf8().constData();
 
-    if (temp.find(".txt") == -1)
+    if ((int)temp.find(".txt") == -1)
     {
         QMessageBox::information(this, "Error","invalid file extention (only .txt format)" );
 

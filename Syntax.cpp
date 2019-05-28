@@ -419,8 +419,6 @@ ListNode* Syntax::Rule9(ListNode *Curr)
 ListNode* Syntax::Rule10(ListNode *Curr)
 {
     Dots++;
-
-
     if (strcmp((const char *)Curr->str, ",") == 0)
     {
         tree.add_child(Dots + 1, -1, "<identifiers-list> ");
@@ -445,7 +443,7 @@ ListNode* Syntax::Rule10(ListNode *Curr)
     else
     {
         Error = true;
-        Err = "Syntax Error: wrong <declaration-list> on pos (" + to_string(Curr->ipos) + "," + to_string(Curr->jpos) + ")";
+        Err = "Syntax Error: wrong <declaration-list> on pos (" + to_string(Curr->prev->ipos) + "," + to_string(Curr->prev->jpos) + ")";
     }
     Dots--;
     return Curr;
